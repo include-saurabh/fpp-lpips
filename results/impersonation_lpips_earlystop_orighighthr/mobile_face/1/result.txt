@@ -1,0 +1,4 @@
+Protection: False
+mobile_face PSR in FAR@0.1: 0.8750, PSR in FAR@0.01: 0.3942, PSR in FAR@0.001: 0.1154
+Protection: True
+mobile_face PSR in FAR@0.1: 1.0000, PSR in FAR@0.01: 0.8942, PSR in FAR@0.001: 0.6635

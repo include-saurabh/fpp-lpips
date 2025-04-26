@@ -1,0 +1,17 @@
+python align.py -i assets/datasets/CelebA-HQ -o assets/datasets/CelebA-HQ_aligned   
+
+######################
+python main.py --source_dir assets/datasets/CelebA-HQ_aligned --is_obfuscation False --MTCNN_cropping True --target_choice 1 --output_dir results/impersonation_run1
+
+#########################
+python main.py --source_dir assets/datasets/CelebA-HQ_aligned --is_obfuscation False --MTCNN_cropping True --target_choice 1 --protected_image_dir results/impersonation_run1
+
+###########
+python main.py --source_dir assets/datasets/CelebA-HQ_aligned --is_obfuscation False --MTCNN_cropping True --target_choice 1 --protected_image_dir results/impersonation_run1
+
+# main.py 
+python main.py --source_dir assets/datasets/CelebA-HQ_aligned --test_dir assets/datasets/CelebA-HQ_aligned --is_obfuscation False --MTCNN_cropping True --target_choice 1 --protected_image_dir results/impersonation_run1
+
+
+### objus
+python main.py --source_dir assets/datasets/CelebA-HQ_aligned --test_dir assets/datasets/CelebA-HQ_aligned --is_obfuscation True --MTCNN_cropping False --target_choice 5 --protected_image_dir results/obfuscation_run1 --test_model_name mobile_face
