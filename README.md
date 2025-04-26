@@ -108,6 +108,15 @@ python main.py \
 
 ![4a46d6ac-cc91-4721-8075-4e7d4e847663](https://github.com/user-attachments/assets/252ed1e0-05e1-4a6d-9b10-f445da5618c8)
 
+## Authors 
+Saurabh Ramdas Nevase (M24DS014)
+Shrashank Maravi (M24DS015)
+
+## Research Guides and Special Thanks
+
+@Sudev007 
+@Umesh-21
+
 
 
 ## Acknowledgements
