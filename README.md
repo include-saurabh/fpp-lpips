@@ -1,4 +1,5 @@
-```markdown
+
+
 # Adversarial Diffusion for Facial Privacy Protection (Enhanced)
 
 This repository implements and enhances a facial privacy protection technique using adversarial optimization within a Stable Diffusion framework, building upon the work from [parham1998/Facial-Privacy-Protection](https://github.com/parham1998/Facial-Privacy-Protection). The goal is to generate protected versions of facial images that either:
@@ -20,8 +21,8 @@ This version incorporates several key additions and modifications to the origina
 *   Based on Stable Diffusion v2-base.
 *   DDIM Inversion for reconstructing initial latents.
 *   Null-Text Inversion Optimization for improved image reconstruction fidelity.
-*   Adversarial optimization targeting surrogate FR models (Ir152, IRSE50, FaceNet).
-*   Evaluation against various test FR models (e.g., MobileFaceNet).
+*   Adversarial optimization targeting surrogate FR models (`Ir152`, `IRSE50`, `FaceNet`).
+*   Evaluation against various test FR models (e.g., `MobileFaceNet`).
 *   Optional MTCNN Cropping.
 *   Optional experimental makeup transfer features.
 
@@ -30,7 +31,8 @@ This version incorporates several key additions and modifications to the origina
 **1. Clone the Repository:**
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git # Replace with your repo URL
+# Replace 'your-username/your-repo-name.git' with the actual URL of your repository
+git clone https://github.com/include-saurabh/fpp-lpips.git
 cd your-repo-name
 ```
 
@@ -39,26 +41,31 @@ cd your-repo-name
 (Using Conda is recommended)
 
 ```bash
+# Create a new conda environment (Python 3.10 recommended)
 conda create -n fpp python=3.10
 conda activate fpp
-# Install PyTorch matching your CUDA version (see PyTorch website)
-# e.g., pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+# Install PyTorch matching your CUDA version.
+# Go to https://pytorch.org/get-started/locally/ and select your preferences.
+# Example for CUDA 11.8:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# Install other dependencies
 pip install -r requirements.txt
 # Ensure requirements.txt includes: diffusers, transformers, accelerate, numpy, opencv-python, Pillow, tqdm, lpips, facenet-pytorch, scikit-image, clip-openai
 ```
 
 **3. Prepare Assets Directory:**
 
-Create an `assets/` directory and populate it:
+Create an `assets/` directory in the project root and populate it as follows:
 
-*   `assets/face_recognition_models/`: Place FR model weights (`.pth` files for ir152, irse50, facenet, mobile_face).
+*   `assets/face_recognition_models/`: Place FR model weights (`.pth` files for `ir152`, `irse50`, `facenet`, `mobile_face`).
 *   `assets/target_images/` & `assets/test_images/`: Place impersonation target images and corresponding test images.
 *   `assets/obfs_target_images/`: Place obfuscation target image (if used).
 *   `assets/datasets/`: Place source image datasets (e.g., `CelebA-HQ_aligned`).
 
 ## Usage
 
-The main script is `main.py`.
+The main script for running the protection process is `main.py`.
 
 **Example Command (Impersonation with LPIPS and Early Stopping @ FAR 0.001):**
 
@@ -72,7 +79,7 @@ python main.py \
     --test_model_name mobile_face \
     --max_prot_steps 100 \
     --null_optimization_steps 20 \
-    --adv_optim_weight 0.003 \
+    --adv_optim_weight 0.006 \
     --diffusion_steps 20 \
     --start_step 17 \
     --use_lpips_loss \
@@ -81,44 +88,30 @@ python main.py \
     --early_stop_far_level 0.001
 ```
 
-**Key Arguments (See `main.py` `parse_args` for details):**
+**Key Arguments (See `main.py` `parse_args` function for all options and defaults):**
 
-*   `--source_dir`, `--test_dir`: Dataset paths.
-*   `--MTCNN_cropping`: Enable face cropping.
-*   `--target_choice`: Impersonation/Obfuscation target ID.
-*   `--protected_image_dir`: Output directory.
-*   `--test_model_name`: Primary FR model for evaluation and early stopping check.
-*   `--max_prot_steps`: Max optimization steps (used if early stopping is off or not met).
-*   `--adv_optim_weight`: Adversarial loss weight.
-*   `--use_lpips_loss`: Enable LPIPS loss.
-*   `--lpips_weight`: LPIPS loss weight (tune this).
-*   `--replace_attn_loss`: Use LPIPS *instead* of attention loss.
-*   `--early_stop_success_criteria`: Enable dynamic stopping.
-*   `--early_stop_far_level`: FAR threshold (0.1, 0.01, 0.001) for early stopping.
-
-**Running Evaluation:**
-
-Modify `main.py` to skip the generation (`adversarial_opt.run()`) and only run the evaluation functions (`attack_local_models` / `attack_local_models_obfuscation`). Run `main.py` pointing `--protected_image_dir` to the results you want to evaluate. Use the modified `tests.py` / `test_obfs.py` if you need to report specific FAR levels only.
-
-## File Structure
-
-```
-.
-├── main.py                 # Main script
-├── adversarial_optimization.py # Core optimization logic (enhanced)
-├── attention_control.py    # Attention manipulation
-├── criteria/               # Loss functions
-├── dataset.py              # Dataset loader
-├── tests.py                # Impersonation evaluation
-├── test_obfs.py            # Obfuscation evaluation
-├── utils.py                # Helpers (model loading etc.)
-├── assets/                 # Data and models (User needs to populate)
-├── results/                # Default output directory
-└── requirements.txt        # Dependencies
-```
+*   `--source_dir`, `--test_dir`: Paths to the source images (to be protected) and corresponding original test images (if different).
+*   `--MTCNN_cropping`: Set to `True` to enable MTCNN face detection and cropping before processing.
+*   `--target_choice`: Index (1-based) of the target image in `assets/target_images/` for impersonation or `assets/obfs_target_images/` for obfuscation.
+*   `--protected_image_dir`: Directory where the generated protected images will be saved.
+*   `--test_model_name`: Name of the primary FR model used for evaluation and (if enabled) the early stopping criteria check (e.g., `mobile_face`).
+*   `--max_prot_steps`: Maximum number of adversarial optimization steps per image. If early stopping is enabled, this acts as an upper limit.
+*   `--adv_optim_weight`: Weight of the adversarial loss term.
+*   `--use_lpips_loss`: Add LPIPS loss to the optimization objective.
+*   `--lpips_weight`: Weight for the LPIPS loss term (requires tuning).
+*   `--replace_attn_loss`: If `True`, LPIPS loss replaces the self-attention loss instead of augmenting it.
+*   `--early_stop_success_criteria`: Enable dynamic early stopping based on the test model's performance.
+*   `--early_stop_far_level`: False Accept Rate (FAR) level (e.g., `0.1`, `0.01`, `0.001`) corresponding to the cosine similarity threshold for successful protection (impersonation or obfuscation) used in early stopping.
 
 ## Acknowledgements
 
-*   This code significantly builds upon and enhances the implementation found at [parham1998/Facial-Privacy-Protection](https://github.com/parham1998/Facial-Privacy-Protection).
-*   Leverages concepts and tools from Stable Diffusion, Diffusers, Null-Text Inversion, InsightFace, LPIPS, Facenet-PyTorch, and CLIP.
+*   This code significantly builds upon and enhances the implementation found at [parham1998/Facial-Privacy-Protection](https://github.com/parham1998/Facial-Privacy-Protection). Our sincere thanks to the original author.
+*   This work leverages concepts, architectures, and tools from the following outstanding projects and libraries:
+    *   [Stable Diffusion](https://github.com/CompVis/stable-diffusion)
+    *   [Hugging Face Diffusers](https://github.com/huggingface/diffusers)
+    *   [Null-Text Inversion](https://null-text-inversion.github.io/)
+    *   [InsightFace](https://github.com/deepinsight/insightface) (for FR models like Ir152, IRSE50)
+    *   [LPIPS (Learned Perceptual Image Patch Similarity)](https://github.com/richzhang/PerceptualSimilarity)
+    *   [Facenet-PyTorch](https://github.com/timesler/facenet-pytorch)
+    *   [CLIP (Contrastive Language–Image Pre-training)](https://github.com/openai/CLIP)
 ```
