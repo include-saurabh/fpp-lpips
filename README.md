@@ -103,6 +103,10 @@ python main.py \
 *   `--early_stop_success_criteria`: Enable dynamic early stopping based on the test model's performance.
 *   `--early_stop_far_level`: False Accept Rate (FAR) level (e.g., `0.1`, `0.01`, `0.001`) corresponding to the cosine similarity threshold for successful protection (impersonation or obfuscation) used in early stopping.
 
+## Results
+![4a46d6ac-cc91-4721-8075-4e7d4e847663](https://github.com/user-attachments/assets/252ed1e0-05e1-4a6d-9b10-f445da5618c8)
+
+
 ## Acknowledgements
 
 *   This code significantly builds upon and enhances the implementation found at [parham1998/Facial-Privacy-Protection](https://github.com/parham1998/Facial-Privacy-Protection). Our sincere thanks to the original author.
