@@ -104,9 +104,12 @@ python main.py \
 *   `--early_stop_far_level`: False Accept Rate (FAR) level (e.g., `0.1`, `0.01`, `0.001`) corresponding to the cosine similarity threshold for successful protection (impersonation or obfuscation) used in early stopping.
 
 ## Results
-![967f18aa-fc83-4ee3-a84f-0108936a3168](https://github.com/user-attachments/assets/f38c7096-8eb8-43c6-9b8b-7a21420c4df8)
 
-![4a46d6ac-cc91-4721-8075-4e7d4e847663](https://github.com/user-attachments/assets/252ed1e0-05e1-4a6d-9b10-f445da5618c8)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f38c7096-8eb8-43c6-9b8b-7a21420c4df8/967f18aa-fc83-4ee3-a84f-0108936a3168" width="45%" />
+  <img src="https://github.com/user-attachments/assets/252ed1e0-05e1-4a6d-9b10-f445da5618c8/4a46d6ac-cc91-4721-8075-4e7d4e847663" width="45%" />
+</p>
+
 
 
 ## Acknowledgements
