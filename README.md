@@ -31,7 +31,6 @@ This version incorporates several key additions and modifications to the origina
 **1. Clone the Repository:**
 
 ```bash
-# Replace 'your-username/your-repo-name.git' with the actual URL of your repository
 git clone https://github.com/include-saurabh/fpp-lpips.git
 cd fpp-lpips
 ```
