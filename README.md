@@ -1,6 +1,6 @@
 
 
-# Adversarial Diffusion for Facial Privacy Protection (Enhanced)
+# Improving Visual Fidelity of Protected Face Images via Perceptually-Guided Adversarial Diffusion
 
 This repository implements and enhances a facial privacy protection technique using adversarial optimization within a Stable Diffusion framework, building upon the work from [parham1998/Facial-Privacy-Protection](https://github.com/parham1998/Facial-Privacy-Protection). The goal is to generate protected versions of facial images that either:
 
